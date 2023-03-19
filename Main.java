@@ -8,5 +8,6 @@ public class Main {
 		frame.setLocation(400, 300); // 設定窗口左上角位置
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);// 設定是否顯示
+		System.out.println(Mode.getStatus());
 	}
 }

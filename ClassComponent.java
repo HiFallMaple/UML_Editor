@@ -1,51 +1,47 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-
-public class ClassComponent extends MovableComponents {
-    Color borderColor = new Color(0x000000);
+import java.awt.Rectangle;
 
 
-    public ClassComponent(){
+public class ClassComponent extends BaseObject {
+    private String name;
+    private Rectangle rectangle;
 
-        // 設定背景顏色為灰色
-        setBackground(new Color(219, 219, 219));
-        setBorder(BorderFactory.createLineBorder(borderColor, 1));
-
-        // 設定為垂直排列的BoxLayout佈局
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        // 添加三個JLabel組件
-        JLabel label1 = new JLabel("Label 1");
-        JLabel label2 = new JLabel("Label 2");
-        JLabel label3 = new JLabel("Label 3");
-        
-
-        add(label1);
-        add(createSeparator());
-        add(label2);
-        add(createSeparator());
-        add(label3);
+    public ClassComponent() {
+        this.rectangle = new Rectangle();
+        this.name = Config.getProperty("bo.CC.name");
+        this.width =Config.getIntProperty("bo.CC.width");
+        this.height = Config.getIntProperty("bo.CC.height");
+        this.setSize(this.width, this.height);
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        this.setSize(this.width, this.height);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        int width = this.getWidth();
-        int height = this.getHeight();
-    }
+        int rectwidth = width - connectionPortSize * 2;
+        int rectheight = height - connectionPortSize * 2;
+        // 抗鋸齒
+        g2d.setColor(backgroundColor);
+        // 畫矩形
+        rectangle.setFrame(connectionPortSize, connectionPortSize, rectwidth, rectheight);
+        g2d.fill(rectangle);
+        g2d.setColor(borderColor);
+        g2d.drawRect(connectionPortSize, connectionPortSize, rectwidth - 1, rectheight - 1);
+        // first line
+        g2d.drawLine(connectionPortSize, rectheight / 3 + connectionPortSize, width - connectionPortSize - 1,
+                rectheight / 3 + connectionPortSize);
+        // second line
+        g2d.drawLine(connectionPortSize, (rectheight / 3)*2 + connectionPortSize, width - connectionPortSize - 1,
+                (rectheight / 3)*2 + connectionPortSize);
 
-    private JSeparator createSeparator(){
-        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
-        separator.setForeground(borderColor);
-        return separator;
+        // 取得字串的長度
+        int textWidth = g2d.getFontMetrics().stringWidth(name);
+
+        // 計算置中的位置
+        int x = (width - textWidth) / 2;
+        int y = (rectheight / 3)/2+connectionPortSize;
+        g2d.drawString(name, x, y);
     }
 }

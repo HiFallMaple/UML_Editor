@@ -1,30 +1,46 @@
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+
 public class Config {
-
-    private static Config instance = null;
-    private Properties properties;
-
-    private Config() {
+    
+    private static final String FILE_NAME = "config.properties";
+    
+    private static Properties properties;
+    
+    static {
+        properties = new Properties();
         try {
-            properties = new Properties();
-            properties.load(new FileInputStream("config.properties"));
+            FileInputStream file = new FileInputStream(FILE_NAME);
+            properties.load(file);
+            file.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Could not load properties file");
         }
     }
-
-    public static synchronized Config getInstance() {
-        if (instance == null) {
-            instance = new Config();
+    
+    public static void setProperty(String key, String value) {
+        properties.setProperty(key, value);
+        try {
+            FileOutputStream file = new FileOutputStream(FILE_NAME);
+            properties.store(file, null);
+            file.close();
+        } catch (IOException e) {
+            System.out.println("Could not save properties file");
         }
-        return instance;
     }
-
-    public String getProperty(String key) {
+    
+    public static String getProperty(String key) {
         return properties.getProperty(key);
     }
 
+    public static int getIntProperty(String key) {
+        return Integer.parseInt(properties.getProperty(key));
+    }
+
+    public static int getHexIntProperty(String key) {
+        return Integer.parseInt(properties.getProperty(key), 16);
+    }
 }

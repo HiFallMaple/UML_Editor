@@ -7,10 +7,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
-public class ArrowComponent extends JPanel {
-    private Config config = Config.getInstance();
-    private Point startOnParent;
-    private Point endOnParent;
+public class ConnectionLine extends JPanel {
     private Point start;
     private Point end;
     private Point location;
@@ -19,10 +16,12 @@ public class ArrowComponent extends JPanel {
     private int padding;
     private int lineWidth;
 
-    public ArrowComponent(Point start, Point end, Color color, int lineWidth) {
-        this.padding = Integer.parseInt(this.config.getProperty("bo.boxpadding"));
-        this.startOnParent = start;
-        this.endOnParent = end;
+    public ConnectionLine(Point start, Point end, Color color, int lineWidth) {
+        this.padding = Config.getIntProperty("bo.boxpadding");
+        init(start, end, color, lineWidth);
+    }
+
+    private void init(Point start, Point end, Color color, int lineWidth) {
         this.location = calLocation(start, end);
         this.size = calSize(start, end);
         this.color = color;
@@ -32,7 +31,6 @@ public class ArrowComponent extends JPanel {
         this.setOpaque(false);
         this._setSize(this.size);
         this.setLocation(location);
-
     }
     
     private void _setSize(Point size){
@@ -55,6 +53,16 @@ public class ArrowComponent extends JPanel {
 
     private Point pointMinus(Point a, Point b){
         return new Point(a.x - b.x, a.y-b.y);
+    }
+
+    public void setStartPoint(Point start){
+        init(start, this.end, this.color, this.lineWidth);
+        repaint();
+    }
+
+    public void setEndPoint(Point end){
+        init(this.start, end, this.color, this.lineWidth);
+        repaint();
     }
     
     @Override

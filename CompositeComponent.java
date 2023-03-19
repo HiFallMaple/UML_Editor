@@ -1,8 +1,7 @@
 import java.awt.Component;
 import java.awt.Point;
 
-public class CompositeComponent extends MovableComponents {
-    // private Config config = Config.getInstance();
+public class CompositeComponent extends InteractiveComponent {
     // private int padding;
 
     public CompositeComponent() {
