@@ -2,17 +2,23 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import javax.swing.JPanel;
+
 
 public class ClassComponent extends BaseObject {
-    private String name;
     private Rectangle rectangle;
 
-    public ClassComponent() {
+    public ClassComponent(JPanel canvas) {
+        super(canvas, Config.getProperty("bo.CC.name"));
         this.rectangle = new Rectangle();
-        this.name = Config.getProperty("bo.CC.name");
         this.width =Config.getIntProperty("bo.CC.width");
         this.height = Config.getIntProperty("bo.CC.height");
         this.setSize(this.width, this.height);
+    }
+
+    @Override
+    public boolean contains(int x, int y) {
+        return rectangle.contains(x, y);
     }
 
     @Override
@@ -37,11 +43,11 @@ public class ClassComponent extends BaseObject {
                 (rectheight / 3)*2 + connectionPortSize);
 
         // 取得字串的長度
-        int textWidth = g2d.getFontMetrics().stringWidth(name);
+        int textWidth = g2d.getFontMetrics().stringWidth(this.getName());
 
         // 計算置中的位置
         int x = (width - textWidth) / 2;
         int y = (rectheight / 3)/2+connectionPortSize;
-        g2d.drawString(name, x, y);
+        g2d.drawString(this.getName(), x, y);
     }
 }

@@ -9,7 +9,9 @@ import javax.swing.JPanel;
 
 public class ConnectionLine extends JPanel {
     private Point start;
+    private Point startInParent;
     private Point end;
+    private Point endInParent;
     private Point location;
     private Point size;
     private Color color;
@@ -17,7 +19,7 @@ public class ConnectionLine extends JPanel {
     private int lineWidth;
 
     public ConnectionLine(Point start, Point end, Color color, int lineWidth) {
-        this.padding = Config.getIntProperty("bo.boxpadding");
+        this.padding = Config.getIntProperty("cl.boxpadding");
         init(start, end, color, lineWidth);
     }
 
@@ -26,45 +28,66 @@ public class ConnectionLine extends JPanel {
         this.size = calSize(start, end);
         this.color = color;
         this.lineWidth = lineWidth;
+        this.startInParent = start;
+        this.endInParent = end;
         this.start = this.pointMinus(start, this.location);
         this.end = this.pointMinus(end, this.location);
         this.setOpaque(false);
         this._setSize(this.size);
         this.setLocation(location);
     }
-    
-    private void _setSize(Point size){
+
+    private void _setSize(Point size) {
         this.setSize(size.x, size.y);
     }
 
-    private Point calLocation(Point start, Point end){
+    private Point calLocation(Point start, Point end) {
         int x = Math.min(start.x, end.x) - this.padding;
         int y = Math.min(start.y, end.y) - this.padding;
-        // if (x>=this.padding) x -= this.padding;
-        // if (y>=this.padding) y -= this.padding;
         Point location = new Point(x, y);
         return location;
     }
 
-    private Point calSize(Point start, Point end){
-        Point location = new Point(Math.abs(start.x- end.x)+this.padding*2, Math.abs(start.y - end.y)+this.padding*2);
+    private Point calSize(Point start, Point end) {
+        Point location = new Point(Math.abs(start.x - end.x) + this.padding * 2,
+                Math.abs(start.y - end.y) + this.padding * 2);
         return location;
     }
 
-    private Point pointMinus(Point a, Point b){
-        return new Point(a.x - b.x, a.y-b.y);
+    private Point pointMinus(Point a, Point b) {
+        return new Point(a.x - b.x, a.y - b.y);
     }
 
-    public void setStartPoint(Point start){
-        init(start, this.end, this.color, this.lineWidth);
+    public void setStartPoint(Point start) {
+        init(start, this.endInParent, this.color, this.lineWidth);
         repaint();
     }
 
-    public void setEndPoint(Point end){
-        init(this.start, end, this.color, this.lineWidth);
+    public void setEndPoint(Point end) {
+        init(this.startInParent, end, this.color, this.lineWidth);
         repaint();
     }
-    
+
+    public void setPoint(Point point, boolean direction) {
+        if (direction == Direction.HEAD) {
+            init(this.startInParent, point, this.color, this.lineWidth);
+            System.out.println("Set Head!!");
+        } else {
+            init(point, this.endInParent, this.color, this.lineWidth);
+            System.out.println("Set Tail!!");
+        }
+        repaint();
+    }
+
+    public Point getEndPoint() {
+        return this.end;
+    }
+
+    @Override
+    public boolean contains(int x, int y) {
+        return false;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -72,18 +95,17 @@ public class ConnectionLine extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-
         // 計算箭頭的角度和長度
         double angle = Math.atan2(end.y - start.y, end.x - start.x);
         double arrowLength = 15;
 
         // 計算箭頭的三個點的座標
-        int[] arrowX = {(int) (end.x - arrowLength * Math.cos(angle - Math.PI / 6)),
-                        end.x,
-                        (int) (end.x - arrowLength * Math.cos(angle + Math.PI / 6))};
-        int[] arrowY = {(int) (end.y - arrowLength * Math.sin(angle - Math.PI / 6)),
-                        end.y,
-                        (int) (end.y - arrowLength * Math.sin(angle + Math.PI / 6))};
+        int[] arrowX = { (int) (end.x - arrowLength * Math.cos(angle - Math.PI / 6)),
+                end.x,
+                (int) (end.x - arrowLength * Math.cos(angle + Math.PI / 6)) };
+        int[] arrowY = { (int) (end.y - arrowLength * Math.sin(angle - Math.PI / 6)),
+                end.y,
+                (int) (end.y - arrowLength * Math.sin(angle + Math.PI / 6)) };
 
         // 繪製箭頭線段和箭頭三角形
         g2d.drawLine(start.x, start.y, end.x, end.y);

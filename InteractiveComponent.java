@@ -3,29 +3,31 @@ import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class InteractiveComponent extends JPanel {
     private Point originOffset;
-
-    public InteractiveComponent() {
-        addMouseMotionListener(new MoveListener());
-        addMouseListener(new PressListener());
+    protected boolean selected = false;
+    protected JPanel canvas;
+    public InteractiveComponent(JPanel canvas) {
+        this.canvas = canvas;
+        MouseAdapter listener = new InteractiveListener();
+        addMouseMotionListener(listener);
+        addMouseListener(listener);
         // _addConnectableListener();
     }
 
-    private class PressListener extends MouseAdapter {
+    private class InteractiveListener extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            if (_passEventToTopParentAboveCanvas(e)) {
+                return;
+            }
             if (Mode.getStatus() == Mode.SELECT) {
-                BaseObject source = (BaseObject) e.getSource();
-                source.toggleSelect();
-            } 
-            else if (_passEventToTopParentAboveCanvas(e)) {
+                toggleSelect();
                 return;
             }
             // 到此時本身已為頂層物件，即可取得canvas，並傳遞事件
@@ -58,12 +60,11 @@ public class InteractiveComponent extends JPanel {
             // 到此時本身已為頂層物件，即可取得canvas，並傳遞事件
             passEventToCanvas(e);
         }
-    };
 
-    private class MoveListener extends MouseMotionAdapter {
         @Override
         public void mouseDragged(MouseEvent e) {
-            if (notOnMode()) {
+            if (Mode.getStatus() != Mode.SELECT) {
+                passEventToCanvas(e);
                 return;
             }
             if (_passEventToTopParentAboveCanvas(e)) {
@@ -73,22 +74,29 @@ public class InteractiveComponent extends JPanel {
             int dy = e.getY() - originOffset.y;
             setLocation(getX() + dx, getY() + dy);
         }
+    };
 
-        private boolean notOnMode() {
-            return Mode.getStatus() != Mode.SELECT;
-        }
+
+    public void select() {
+        selected = true;
+        revalidate();
+        repaint();
     }
 
-    private void passEventToCanvas(MouseEvent e) {
-        Component canvas = getParent();
-        passEventToParent(e, canvas);
+    public void unselect() {
+        selected = false;
+        revalidate();
+        repaint();
     }
 
-    private boolean isCanvas(Container container) {
-        if (container.getName() == "Canvas")
-            return true;
-        else
-            return false;
+    public void toggleSelect() {
+        selected = !selected;
+        revalidate();
+        repaint();
+    }
+
+    public boolean isSelected(){
+        return selected;
     }
 
     private boolean _passEventToTopParentAboveCanvas(MouseEvent e) {
@@ -98,10 +106,10 @@ public class InteractiveComponent extends JPanel {
          */
         Component source = (Component) e.getSource();
         Container parent = source.getParent();
-        if (parent == null || isCanvas(parent)) {
+        if (parent == null || parent == this.canvas) {
             return false;
         }
-        while (parent != null && !isCanvas(parent)) {
+        while (parent != null && parent != this.canvas) {
             source = parent;
             parent = source.getParent();
         }
@@ -110,29 +118,14 @@ public class InteractiveComponent extends JPanel {
         return true;
     }
 
-    // private boolean _passEventToBaseObject(MouseEvent e) {
-    // /**
-    // * 如果目前組件不是canvas下第一階的層級，往上傳遞事件並回傳true讓函數跳出
-    // * 如果是的話什麼也不做
-    // */
-    // Component source = (Component) e.getSource();
-    // Container parent = source.getParent();
-    // if (parent == null || isCanvas(parent)) {
-    // return false;
-    // }
-    // while (parent != null && !isCanvas(parent)) {
-    // source = parent;
-    // parent = source.getParent();
-    // }
-    // // parent = source;
-    // passEventToParent(e, source);
-    // return true;
-    // }
+    private void passEventToCanvas(MouseEvent e){
+        // Container parent = source.getParent();
+        Container parent = this.canvas;
+        passEventToParent(e, parent);
+    }
 
     private void passEventToParent(MouseEvent e, Component parent) {
         Component source = (Component) e.getSource();
-        // MouseEvent parentEvent = SwingUtilities.convertMouseEvent(source, e,
-        // source.getParent());
         MouseEvent parentEvent = SwingUtilities.convertMouseEvent(source, e, parent);
         parent.dispatchEvent(parentEvent);
     }

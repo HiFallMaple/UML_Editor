@@ -1,28 +1,39 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class UseCaseComponent extends BaseObject {
 
+    private JLabel nameLabel = new JLabel(this.getName(), SwingConstants.CENTER);
     private Ellipse2D oval;
-    private JLabel nameLabel;
 
-    public UseCaseComponent(String name) {
-        init(name);
+    public UseCaseComponent(String name, JPanel canvas) {
+        super(canvas, name);
+        init();
     }
 
-    public UseCaseComponent() {
-        String name = Config.getProperty("bo.UCC.name");
-        init(name);
+    public UseCaseComponent(JPanel canvas) {
+        super(canvas, Config.getProperty("bo.UCC.name"));
+        init();
     }
 
-    public void init(String name) {
+    @Override
+    public void setName(String name){
+        super.setName(name);
+        if (this.nameLabel != null){   
+            this.nameLabel.setText(name);
+        }
+        repaint();
+    }
+
+    public void init() {
         this.oval = new Ellipse2D.Double();
-        this.setName(name);
-        this.nameLabel = new JLabel(name, SwingConstants.CENTER);
+        this.setName(this.getName());
         this.width = Config.getIntProperty("bo.UCC.width");
         this.height = Config.getIntProperty("bo.UCC.height");
         setLayout(new BorderLayout());
@@ -40,6 +51,7 @@ public class UseCaseComponent extends BaseObject {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         setSize(this.width, this.height);
+        this.nameLabel.repaint();
         Graphics2D g2d = (Graphics2D) g;
         int ovalwidth = width - connectionPortSize*2;
         int ovalheight = height - connectionPortSize*2;

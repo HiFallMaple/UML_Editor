@@ -10,8 +10,7 @@ public class Frame extends JFrame {
         this.setJMenuBar(menuBar);
 
         JPanel root = new JPanel();
-        JPanel editorPanel = new EditorPanel(Config.getIntProperty("area.padding"));
-
+        JPanel editorPanel = new EditorPanel(Config.getIntProperty("area.padding"), this);
         JPanel controlArea = new ControlPanel(Config.getIntProperty("area.padding"));
 
         this.setContentPane(root);
