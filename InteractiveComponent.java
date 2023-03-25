@@ -11,6 +11,8 @@ public class InteractiveComponent extends JPanel {
     private Point originOffset;
     protected boolean selected = false;
     protected JPanel canvas;
+    public Point location = null;
+
     public InteractiveComponent(JPanel canvas) {
         this.canvas = canvas;
         MouseAdapter listener = new InteractiveListener();
@@ -72,6 +74,7 @@ public class InteractiveComponent extends JPanel {
             }
             int dx = e.getX() - originOffset.x;
             int dy = e.getY() - originOffset.y;
+            location = new Point(getX() + dx, getY() + dy);
             setLocation(getX() + dx, getY() + dy);
         }
     };

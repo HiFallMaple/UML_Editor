@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class BroadcastManager {
-    private static BroadcastManager instance = null;
     private static ArrayList<BroadcastListener> listeners;
 
     static{

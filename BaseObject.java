@@ -4,15 +4,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.sound.sampled.Line;
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 public class BaseObject extends InteractiveComponent {
@@ -46,13 +41,6 @@ public class BaseObject extends InteractiveComponent {
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(this.connectionPortSize, this.connectionPortSize,
                 this.connectionPortSize, this.connectionPortSize)); // 添加10像素的Margin
-
-        // this.addMouseListener(new MouseAdapter() {
-        //     @Override
-        //     public void mouseClicked(MouseEvent e) {
-        //         toggleSelect();
-        //     }
-        // });
 
         BroadcastManager.subListener(new UnselectListener());
     }

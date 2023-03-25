@@ -22,7 +22,7 @@ public class EditorPanel extends PaddingPanel {
         addBox(new JPanel());
         interactiveComponentsList = new ArrayList<InteractiveComponent>();
         compositeComponentsList = new ArrayList<CompositeComponent>();
-        this.frame=frame;
+        this.frame = frame;
         // this.setLayout(null);
         box.setName("Canvas");
         box.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -44,7 +44,7 @@ public class EditorPanel extends PaddingPanel {
             } else if (eventName == "ungroup") {
                 System.out.println("toggle ungroup listener");
                 unGroupComponents();
-            } else if(eventName == "change object name"){
+            } else if (eventName == "change object name") {
                 System.out.println("toggle change name listener");
                 changeObjectName();
             }
@@ -100,7 +100,7 @@ public class EditorPanel extends PaddingPanel {
         }
     }
 
-    private void changeObjectName(){
+    private void changeObjectName() {
         int selectedCount = 0;
         InteractiveComponent selectedComponent = null;
         for (InteractiveComponent component : interactiveComponentsList) {
@@ -110,8 +110,8 @@ public class EditorPanel extends PaddingPanel {
             }
         }
         if (selectedCount == 1) {
-            if (selectedComponent instanceof BaseObject){
-                ChangeNameDialog dialog = new ChangeNameDialog(frame); 
+            if (selectedComponent instanceof BaseObject) {
+                ChangeNameDialog dialog = new ChangeNameDialog(frame);
                 dialog.setVisible(true);
                 selectedComponent.setName(dialog.getText());
                 // selectedComponent
@@ -119,7 +119,6 @@ public class EditorPanel extends PaddingPanel {
         }
 
     }
-
 
     private void refresh() {
         this.box.revalidate();
@@ -194,7 +193,7 @@ public class EditorPanel extends PaddingPanel {
                     };
 
                     if (baseObjects[0] != null && baseObjects[1] != null) {
-                        addConnectionLine(baseObjects);
+                        addConnectionLine(Mode.getStatus(), baseObjects);
                     }
                 } else if (Mode.getStatus() == Mode.SELECT) {
                     // Component[] components = getComponents();
@@ -232,8 +231,17 @@ public class EditorPanel extends PaddingPanel {
             }
         }
 
-        public void addConnectionLine(BaseObject[] objects) {
-            ConnectionLine line = new ConnectionLine(pressPoint, releasePoint, Color.BLACK, 2);
+        public void addConnectionLine(int status, BaseObject[] objects) {
+            ConnectionLine line = null;
+            if (status == Mode.ASSOCIATION) {
+                line = new AssociationLine(pressPoint, releasePoint, Color.BLACK, 2);
+            } else if (status == Mode.GENERALIZATION) {
+                line = new GeneralizationLine(pressPoint, releasePoint, Color.BLACK, 2);
+            } else if (status == Mode.COMPOSITION) {
+                line = new CompositionLine(pressPoint, releasePoint, Color.BLACK, 2);
+            } else {
+                return;
+            }
             EditorPanel.this.addComponent(line);
             EditorPanel.this.refresh();
             Point[] relativePoint = new Point[2];

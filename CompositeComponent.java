@@ -10,7 +10,6 @@ public class CompositeComponent extends InteractiveComponent {
     protected int width;
     protected int height;
     public ArrayList<InteractiveComponent> interactiveComponents;
-    public Point location = null;
 
     public CompositeComponent(JPanel canvas, ArrayList<InteractiveComponent> components) {
         super(canvas);
