@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 public class CompositeComponent extends InteractiveComponent {
-    // private int padding;
-    // protected JPanel canvas;
-    protected int width;
-    protected int height;
     public ArrayList<InteractiveComponent> interactiveComponents;
 
     public CompositeComponent(JPanel canvas, ArrayList<InteractiveComponent> components) {
@@ -19,7 +15,7 @@ public class CompositeComponent extends InteractiveComponent {
         this.interactiveComponents = components;
         calSize();
         addComponents();
-        setBounds(location.x, location.y, width, height);
+        setBounds(getX(), getY(), width, height);
     }
 
     @Override
@@ -28,7 +24,6 @@ public class CompositeComponent extends InteractiveComponent {
         boolean result = false;
         for (Component component : components) {
             Point componentXY = new Point(x - component.getX(), y - component.getY());
-            // System.out.println(componentXY);
             result = result | component.contains(componentXY.x, componentXY.y);
         }
         return result;
@@ -49,7 +44,6 @@ public class CompositeComponent extends InteractiveComponent {
             down = Math.max(down, location.y + height);
             right = Math.max(right, location.x + width);
         }
-        this.location = new Point(left, up);
         this.width = right - left;
         this.height = down - up;
     }
@@ -57,7 +51,7 @@ public class CompositeComponent extends InteractiveComponent {
     private void addComponents() {
         for (Component component : interactiveComponents) {
             Point l = component.getLocation();
-            component.setLocation(l.x - location.x, l.y - location.y);
+            component.setLocation(l.x - getX(), l.y - getY());
             add(component, 0);
         }
     }
@@ -66,7 +60,7 @@ public class CompositeComponent extends InteractiveComponent {
         // for (Component component : interactiveComponents) {
         for (Component component : interactiveComponents) {
             Point l = component.getLocation();
-            component.setLocation(l.x + location.x, l.y + location.y);
+            component.setLocation(l.x + getX(), l.y + getY());
             canvas.add(component);
         }
     }

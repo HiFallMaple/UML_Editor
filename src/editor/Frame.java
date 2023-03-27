@@ -14,8 +14,9 @@ public class Frame extends JFrame {
         this.setJMenuBar(menuBar);
 
         JPanel root = new JPanel();
-        JPanel editorPanel = new EditorPanel(Config.getIntProperty("area.padding"), this);
+        EditorPanel editorPanel = new EditorPanel(Config.getIntProperty("area.padding"));
         JPanel controlArea = new ControlPanel(Config.getIntProperty("area.padding"));
+        CanvasEventController canvasEventController = new CanvasEventController(editorPanel, this);
 
         this.setContentPane(root);
         root.setLayout(new BorderLayout());

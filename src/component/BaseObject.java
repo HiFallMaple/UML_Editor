@@ -17,16 +17,11 @@ import main.Config;
 import main.Direction;
 
 public class BaseObject extends InteractiveComponent {
-    // private int padding;
-    protected int width = 0;
-    protected int height = 0;
     protected Color backgroundColor = null;
     protected Color borderColor = null;
     protected int connectionPortSize = Config.getIntProperty("bo.connectionPortSize");
-    protected JPanel box = null;
     protected ConnectionLine[] connectionLineList = null;// up left down right
     protected ArrayList<ArrayList<LinePairs>> linePairsArrayList;
-    protected JPanel canvas = null;
     
 
     public BaseObject(JPanel canvas, String name) {
@@ -43,7 +38,6 @@ public class BaseObject extends InteractiveComponent {
             this.linePairsArrayList.add(new ArrayList<LinePairs>());
             this.linePairsArrayList.set(i, new ArrayList<LinePairs>());
         }
-        this.canvas = canvas;
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(this.connectionPortSize, this.connectionPortSize,
                 this.connectionPortSize, this.connectionPortSize)); // 添加10像素的Margin

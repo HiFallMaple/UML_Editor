@@ -71,10 +71,10 @@ public class ConnectionLine extends JPanel {
     public void setPoint(Point point, boolean direction) {
         if (direction == Direction.HEAD) {
             init(this.startInParent, point, this.color, this.lineWidth);
-            System.out.println("Set Head!!");
+            // System.out.println("Set Head!!");
         } else {
             init(point, this.endInParent, this.color, this.lineWidth);
-            System.out.println("Set Tail!!");
+            // System.out.println("Set Tail!!");
         }
         repaint();
     }
