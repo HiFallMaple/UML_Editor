@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -56,13 +57,14 @@ public class EditorPanel extends PaddingPanel {
         for (Component component : this.box.getComponents()) {
             if (component instanceof InteractiveComponent) {
                 if (((InteractiveComponent) component).isSelected()) {
-                    ((InteractiveComponent) component).unselect();
                     group.add((InteractiveComponent) component);
                 }
             }
         }
         if (group.size() > 1) { // 如果select的大於一個，才進行group
+            Collections.reverse(group);
             for (InteractiveComponent component : group) {
+                component.unselect();
                 removeInteractiveComponent(component);
                 if (component instanceof CompositeComponent) {
                     removeCompositeComponent((CompositeComponent) component);

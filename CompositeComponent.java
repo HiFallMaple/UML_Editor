@@ -53,27 +53,27 @@ public class CompositeComponent extends InteractiveComponent {
         this.height = down - up;
     }
 
-    private void addComponents(){
+    private void addComponents() {
         for (Component component : interactiveComponents) {
             Point l = component.getLocation();
-            component.setLocation(l.x-location.x, l.y-location.y);
-            add(component);
+            component.setLocation(l.x - location.x, l.y - location.y);
+            add(component, 0);
         }
     }
 
-    public void removeComponents(){
+    public void removeComponents() {
+        // for (Component component : interactiveComponents) {
         for (Component component : interactiveComponents) {
             Point l = component.getLocation();
-            component.setLocation(l.x+location.x, l.y+location.y);
+            component.setLocation(l.x + location.x, l.y + location.y);
             canvas.add(component);
         }
     }
 
-
     @Override
     public void select() {
         selected = true;
-        for(InteractiveComponent component: interactiveComponents){
+        for (InteractiveComponent component : interactiveComponents) {
             component.select();
         }
         revalidate();
@@ -83,7 +83,7 @@ public class CompositeComponent extends InteractiveComponent {
     @Override
     public void unselect() {
         selected = false;
-        for(InteractiveComponent component: interactiveComponents){
+        for (InteractiveComponent component : interactiveComponents) {
             component.unselect();
         }
         revalidate();
@@ -92,9 +92,9 @@ public class CompositeComponent extends InteractiveComponent {
 
     @Override
     public void toggleSelect() {
-        if(selected){
+        if (selected) {
             unselect();
-        }else{
+        } else {
             select();
         }
         revalidate();
