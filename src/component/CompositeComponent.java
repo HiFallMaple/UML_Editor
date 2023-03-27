@@ -49,19 +49,19 @@ public class CompositeComponent extends InteractiveComponent {
     }
 
     private void addComponents() {
-        for (Component component : interactiveComponents) {
+        for (InteractiveComponent component : interactiveComponents) {
             Point l = component.getLocation();
             component.setLocation(l.x - getX(), l.y - getY());
             add(component, 0);
         }
     }
 
-    public void removeComponents() {
-        // for (Component component : interactiveComponents) {
-        for (Component component : interactiveComponents) {
-            Point l = component.getLocation();
-            component.setLocation(l.x + getX(), l.y + getY());
-            canvas.add(component);
+    public void moveLineToTop(){
+        for (InteractiveComponent component : interactiveComponents) {
+            if (component instanceof BaseObject){
+                BaseObject object = (BaseObject) component;
+                object.moveLineToTop();
+            }
         }
     }
 

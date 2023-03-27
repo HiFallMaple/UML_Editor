@@ -50,17 +50,17 @@ public class CanvasEventController {
     }
 
     private void groupComponents() {
-        ArrayList<InteractiveComponent> group = new ArrayList<InteractiveComponent>();
+        ArrayList<InteractiveComponent> list = new ArrayList<InteractiveComponent>();
         for (Component component : canvas.getComponents()) {
             if (component instanceof InteractiveComponent) {
                 if (((InteractiveComponent) component).isSelected()) {
-                    group.add((InteractiveComponent) component);
+                    list.add((InteractiveComponent) component);
                 }
             }
         }
-        if (group.size() > 1) { // 如果select的大於一個，才進行group
-            Collections.reverse(group);
-            for (InteractiveComponent component : group) {
+        if (list.size() > 1) { // 如果select的大於一個，才進行group
+            Collections.reverse(list);
+            for (InteractiveComponent component : list) {
                 component.unselect();
                 panel.removeInteractiveComponent(component);
                 if (component instanceof CompositeComponent) {
@@ -70,7 +70,9 @@ public class CanvasEventController {
 
                 }
             }
-            panel.addCompositeComponent(new CompositeComponent(canvas, group));
+            CompositeComponent group = new CompositeComponent(canvas, list);
+            panel.addCompositeComponent(group);
+            group.moveLineToTop();
         }
     }
 

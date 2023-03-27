@@ -1,4 +1,5 @@
 package component;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -22,7 +23,6 @@ public class BaseObject extends InteractiveComponent {
     protected int connectionPortSize = Config.getIntProperty("bo.connectionPortSize");
     protected ConnectionLine[] connectionLineList = null;// up left down right
     protected ArrayList<ArrayList<LinePairs>> linePairsArrayList;
-    
 
     public BaseObject(JPanel canvas, String name) {
         super(canvas);
@@ -34,7 +34,7 @@ public class BaseObject extends InteractiveComponent {
         this.connectionLineList = new ConnectionLine[4];
         this.linePairsArrayList = new ArrayList<ArrayList<LinePairs>>();
         this.setName(name);
-        for(int i = 0; i<4; i++){
+        for (int i = 0; i < 4; i++) {
             this.linePairsArrayList.add(new ArrayList<LinePairs>());
             this.linePairsArrayList.set(i, new ArrayList<LinePairs>());
         }
@@ -46,31 +46,30 @@ public class BaseObject extends InteractiveComponent {
     }
 
     @Override
-    public void setName(String name){
+    public void setName(String name) {
         super.setName(name);
         repaint();
     }
 
-
-    private class UnselectListener implements BroadcastListener{
+    private class UnselectListener implements BroadcastListener {
 
         @Override
         public void handle(String eventName, String message) {
-            if(eventName == "unselect"){
+            if (eventName == "unselect") {
                 unselect();
             }
         }
     }
 
-    private class LinePairs{
+    private class LinePairs {
         public ConnectionLine line;
         public boolean lineDirection; // 箭頭的方向
-        public LinePairs(ConnectionLine line, boolean lineDirection){
-            this.line=line;
-            this.lineDirection=lineDirection;
+
+        public LinePairs(ConnectionLine line, boolean lineDirection) {
+            this.line = line;
+            this.lineDirection = lineDirection;
         }
     }
-
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -106,13 +105,13 @@ public class BaseObject extends InteractiveComponent {
 
         switch (result) {
             case 0:
-            return Direction.DOWN;
+                return Direction.DOWN;
             case 1:
-            return Direction.RIGHT;
+                return Direction.RIGHT;
             case 2:
-            return Direction.LEFT;
+                return Direction.LEFT;
             case 3:
-            return Direction.UP;
+                return Direction.UP;
         }
 
         return -1;
@@ -139,15 +138,23 @@ public class BaseObject extends InteractiveComponent {
 
     private void refreshConnectionLine() {
         for (int i = 0; i < 4; i++) {
-            for(LinePairs pair: linePairsArrayList.get(i)){
-                    Point point = SwingUtilities.convertPoint(this, getConnectionPortPoint(i), this.canvas);
-                    if (pair.lineDirection == Direction.HEAD) {
-                        pair.line.setEndPoint(point);
-                    } else {
-                        pair.line.setStartPoint(point);
-                    }
+            for (LinePairs pair : linePairsArrayList.get(i)) {
+                Point point = SwingUtilities.convertPoint(this, getConnectionPortPoint(i), this.canvas);
+                if (pair.lineDirection == Direction.HEAD) {
+                    pair.line.setEndPoint(point);
+                } else {
+                    pair.line.setStartPoint(point);
                 }
-            
+            }
+
+        }
+    }
+
+    public void moveLineToTop() {
+        for (int i = 0; i < 4; i++) {
+            for (LinePairs pair : linePairsArrayList.get(i)) {
+                canvas.setComponentZOrder(pair.line, 0);
+            }
         }
     }
 
