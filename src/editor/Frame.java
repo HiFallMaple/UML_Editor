@@ -1,5 +1,9 @@
+package editor;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import main.Config;
+
 import java.awt.BorderLayout;
 
 public class Frame extends JFrame {

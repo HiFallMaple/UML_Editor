@@ -1,3 +1,4 @@
+package editor;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -11,6 +12,9 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import main.Config;
+import main.Mode;
 
 public class ControlPanel extends PaddingPanel {
     private JButton[] buttons;
@@ -55,7 +59,7 @@ public class ControlPanel extends PaddingPanel {
     }
 
     private ImageIcon getIcon(String filename) {
-        ImageIcon icon = new ImageIcon("res/" + filename + ".png");
+        ImageIcon icon = new ImageIcon("src/res/" + filename + ".png");
 
         // 取得原始圖片寬度和高度
         int originalWidth = icon.getIconWidth();

@@ -1,5 +1,8 @@
+package main;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
+
+import editor.Frame;
 
 public class Main {
 	public static void main(String[] args) {

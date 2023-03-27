@@ -1,3 +1,4 @@
+package editor;
 import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;

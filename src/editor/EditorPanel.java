@@ -1,3 +1,4 @@
+package editor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -11,6 +12,20 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import component.AssociationLine;
+import component.BaseObject;
+import component.ClassComponent;
+import component.CompositeComponent;
+import component.CompositionLine;
+import component.ConnectionLine;
+import component.GeneralizationLine;
+import component.InteractiveComponent;
+import component.UseCaseComponent;
+import main.BroadcastListener;
+import main.BroadcastManager;
+import main.Direction;
+import main.Mode;
 
 public class EditorPanel extends PaddingPanel {
 

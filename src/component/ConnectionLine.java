@@ -1,7 +1,11 @@
+package component;
 import java.awt.Color;
 import java.awt.Point;
 
 import javax.swing.JPanel;
+
+import main.Config;
+import main.Direction;
 
 public class ConnectionLine extends JPanel {
     protected Point start;

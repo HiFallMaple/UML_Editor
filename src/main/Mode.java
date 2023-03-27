@@ -1,3 +1,4 @@
+package main;
 public class Mode {
     private static int mode = 0;
     public final static int SELECT = 0;

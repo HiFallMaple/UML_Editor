@@ -1,3 +1,4 @@
+package component;
 import java.awt.Component;
 import java.awt.Point;
 import java.util.ArrayList;

@@ -1,3 +1,4 @@
+package component;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Point;
@@ -6,6 +7,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import main.Mode;
 
 public class InteractiveComponent extends JPanel {
     private Point originOffset;

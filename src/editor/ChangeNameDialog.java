@@ -1,3 +1,4 @@
+package editor;
 import javax.swing.*;
 
 public class ChangeNameDialog extends JDialog {

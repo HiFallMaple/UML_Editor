@@ -1,8 +1,11 @@
+package component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import javax.swing.JPanel;
+
+import main.Config;
 
 
 public class ClassComponent extends BaseObject {

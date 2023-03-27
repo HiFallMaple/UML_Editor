@@ -1,3 +1,4 @@
+package component;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -5,6 +6,8 @@ import java.awt.geom.Ellipse2D;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import main.Config;
 
 public class UseCaseComponent extends BaseObject {
 

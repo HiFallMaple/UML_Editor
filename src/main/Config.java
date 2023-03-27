@@ -1,3 +1,4 @@
+package main;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -6,7 +7,7 @@ import java.util.Properties;
 
 public class Config {
     
-    private static final String FILE_NAME = "config.properties";
+    private static final String FILE_NAME = "src/main/config.properties";
     
     private static Properties properties;
     

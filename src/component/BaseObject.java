@@ -1,3 +1,4 @@
+package component;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,6 +10,11 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import main.BroadcastListener;
+import main.BroadcastManager;
+import main.Config;
+import main.Direction;
 
 public class BaseObject extends InteractiveComponent {
     // private int padding;
