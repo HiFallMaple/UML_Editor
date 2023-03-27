@@ -135,7 +135,7 @@ public class CanvasEventController {
             // System.out.println(pressPoint);
             if (Mode.getStatus() == Mode.SELECT) {
                 pressComponent = canvas.getComponentAt(pressPoint.x, pressPoint.y);
-                if (pressComponent.getName() != "Canvas"){
+                if (pressComponent != canvas){
                     Point location = pressComponent.getLocation();
                     originOffset =  new Point(location.x - pressPoint.x, location.y - pressPoint.y);
                 }
@@ -206,7 +206,7 @@ public class CanvasEventController {
             // System.out.println(clickPoint);
             if (Mode.getStatus() == Mode.SELECT) {
                 Component component = canvas.getComponentAt(clickPoint.x, clickPoint.y);
-                if(component != null){
+                if(component != canvas){
                     if(component instanceof InteractiveComponent){
                         ((InteractiveComponent)component).toggleSelect();
                     }
@@ -224,7 +224,7 @@ public class CanvasEventController {
             // System.out.println("Dragged canvas");
             // System.out.println(draggedPoint);
             if (Mode.getStatus() == Mode.SELECT){
-                if (pressComponent.getName() != "Canvas"){
+                if (pressComponent != canvas){
                     pressComponent.setLocation(e.getX() + originOffset.x, e.getY() + originOffset.y);
                 }
             }
