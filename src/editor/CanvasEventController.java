@@ -98,6 +98,7 @@ public class CanvasEventController {
                 }
             }
             panel.removeCompositeComponent(group);
+            group.moveLineToTop();
         }
     }
 
