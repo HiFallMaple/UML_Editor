@@ -47,10 +47,11 @@ public class ClassComponent extends BaseObject {
 
         // 取得字串的長度
         int textWidth = g2d.getFontMetrics().stringWidth(this.getName());
+        int textHeight = g2d.getFontMetrics().getHeight();
 
         // 計算置中的位置
         int x = (width - textWidth) / 2;
-        int y = (rectheight / 3)/2+connectionPortSize;
+        int y = (rectheight / 3 - textHeight)/2+connectionPortSize+textHeight-g2d.getFontMetrics().getDescent();
         g2d.drawString(this.getName(), x, y);
     }
 }

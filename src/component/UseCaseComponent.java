@@ -3,15 +3,12 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import main.Config;
 
 public class UseCaseComponent extends BaseObject {
 
-    private JLabel nameLabel = new JLabel(this.getName(), SwingConstants.CENTER);
     private Ellipse2D oval;
 
     public UseCaseComponent(String name, JPanel canvas) {
@@ -24,14 +21,6 @@ public class UseCaseComponent extends BaseObject {
         init();
     }
 
-    @Override
-    public void setName(String name){
-        super.setName(name);
-        if (this.nameLabel != null){   
-            this.nameLabel.setText(name);
-        }
-        repaint();
-    }
 
     public void init() {
         this.oval = new Ellipse2D.Double();
@@ -40,7 +29,6 @@ public class UseCaseComponent extends BaseObject {
         this.height = Config.getIntProperty("bo.UCC.height");
         setLayout(new BorderLayout());
         setSize(this.width, this.height);
-        add(this.nameLabel);
         return;
     }
     
@@ -53,7 +41,6 @@ public class UseCaseComponent extends BaseObject {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         setSize(this.width, this.height);
-        this.nameLabel.repaint();
         Graphics2D g2d = (Graphics2D) g;
         int ovalwidth = width - connectionPortSize*2;
         int ovalheight = height - connectionPortSize*2;
@@ -64,5 +51,12 @@ public class UseCaseComponent extends BaseObject {
         g2d.fill(oval);
         g2d.setColor(borderColor);
         g2d.drawOval(connectionPortSize, connectionPortSize, ovalwidth - 1, ovalheight-1);
+        // 取得字串的長度
+        int textWidth = g2d.getFontMetrics().stringWidth(this.getName());
+        int textHeight = g2d.getFontMetrics().getHeight();
+        // 計算置中的位置
+        int x = (width - textWidth) / 2;
+        int y = (height - textHeight)/2 + textHeight - g2d.getFontMetrics().getDescent();
+        g2d.drawString(this.getName(), x, y);
     }
 }
