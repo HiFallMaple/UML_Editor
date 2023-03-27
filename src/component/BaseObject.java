@@ -12,8 +12,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import main.BroadcastListener;
-import main.BroadcastManager;
 import main.Config;
 import main.Direction;
 
@@ -42,23 +40,12 @@ public class BaseObject extends InteractiveComponent {
         this.setBorder(BorderFactory.createEmptyBorder(this.connectionPortSize, this.connectionPortSize,
                 this.connectionPortSize, this.connectionPortSize)); // 添加10像素的Margin
 
-        BroadcastManager.subListener(new UnselectListener());
     }
 
     @Override
     public void setName(String name) {
         super.setName(name);
         repaint();
-    }
-
-    private class UnselectListener implements BroadcastListener {
-
-        @Override
-        public void handle(String eventName, String message) {
-            if (eventName == "unselect") {
-                unselect();
-            }
-        }
     }
 
     private class LinePairs {
