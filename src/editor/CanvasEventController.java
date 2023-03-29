@@ -135,6 +135,7 @@ public class CanvasEventController {
             pressPoint = new Point(e.getX(), e.getY());
             // System.out.println(pressPoint);
             if (Mode.getStatus() == Mode.SELECT) {
+                BroadcastManager.fire("unselect", "");
                 pressComponent = canvas.getComponentAt(pressPoint.x, pressPoint.y);
                 if (pressComponent != canvas) {
                     Point location = pressComponent.getLocation();
@@ -164,7 +165,6 @@ public class CanvasEventController {
                     }
                 } else if (Mode.getStatus() == Mode.SELECT) {
                     // Component[] components = getComponents();
-                    BroadcastManager.fire("unselect", "");
                     Point leftTop = new Point(Math.min(pressPoint.x, releasePoint.x),
                             Math.min(pressPoint.y, releasePoint.y));
                     Point rightDown = new Point(Math.max(pressPoint.x, releasePoint.x),
