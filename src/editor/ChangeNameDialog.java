@@ -1,8 +1,10 @@
 package editor;
 import javax.swing.*;
 
+
 public class ChangeNameDialog extends JDialog {
     private JTextField textField;
+    private boolean change = false;
 
     public ChangeNameDialog(JFrame parent) {
         super(parent, "", true);
@@ -13,12 +15,13 @@ public class ChangeNameDialog extends JDialog {
         panel.add(textField);
         JButton okButton = new JButton("OK");
         okButton.addActionListener(e -> {
+            change = true;
             setVisible(false);
         });
         panel.add(okButton);
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(e -> {
-            textField.setText("");
+            // textField.setText(component.getName());
             setVisible(false);
         });
         panel.add(cancelButton);
@@ -29,5 +32,9 @@ public class ChangeNameDialog extends JDialog {
 
     public String getText() {
         return textField.getText();
+    }
+
+    public boolean isChanged(){
+        return change;
     }
 }

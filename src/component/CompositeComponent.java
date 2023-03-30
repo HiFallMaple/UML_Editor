@@ -1,4 +1,5 @@
 package component;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -13,9 +14,10 @@ public class CompositeComponent extends InteractiveComponent {
         setOpaque(false);
         setLayout(null);
         this.interactiveComponents = components;
-        calSize();
+        calSetSize();
         addComponents();
-        setBounds(getX(), getY(), width, height);
+        setOpaque(true);
+        setBackground(Color.BLUE);
     }
 
     @Override
@@ -29,9 +31,9 @@ public class CompositeComponent extends InteractiveComponent {
         return result;
     }
 
-    public void calSize() {
-        int up = 0;
-        int left = 0;
+    public void calSetSize() {
+        int up = Integer.MAX_VALUE;
+        int left = Integer.MAX_VALUE;
         int down = 0;
         int right = 0;
         // Component[] components = getComponents();
@@ -46,6 +48,7 @@ public class CompositeComponent extends InteractiveComponent {
         }
         this.width = right - left;
         this.height = down - up;
+        setBounds(left, up, width, height);
     }
 
     private void addComponents() {

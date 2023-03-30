@@ -43,7 +43,6 @@ public class MenuBar extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 BroadcastManager.fire("change object name", "");
-                
             }
         });
         editMenu.add(item);

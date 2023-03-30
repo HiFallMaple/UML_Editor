@@ -116,7 +116,9 @@ public class CanvasEventController {
             if (selectedComponent instanceof BaseObject) {
                 ChangeNameDialog dialog = new ChangeNameDialog(frame);
                 dialog.setVisible(true);
-                selectedComponent.setName(dialog.getText());
+                if (dialog.isChanged()){   
+                    selectedComponent.setName(dialog.getText());
+                }
                 // selectedComponent
             }
         }
