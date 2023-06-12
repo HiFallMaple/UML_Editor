@@ -51,6 +51,12 @@ public class Canvas extends PaddingPanel {
     public void addObject(Shape object) {
         this.box.add(object, 0);
         this.shapeList.add(object);
+        refresh();
+    }
+
+    public void addLine(Shape object) {
+        this.box.add(object, 0);
+        refresh();
     }
 
     public void removeObject(Shape object) {
@@ -147,7 +153,7 @@ public class Canvas extends PaddingPanel {
         if (count == 1) { // 如果select等於一個，才進行ungroup
             ChangeNameDialog dialog = new ChangeNameDialog(frame);
             dialog.setVisible(true);
-            if(dialog.isOk()){
+            if (dialog.isOk()) {
                 String text = dialog.getText();
                 object.setName(text);
             }
@@ -161,9 +167,9 @@ public class Canvas extends PaddingPanel {
      * @return Shape BasicObject
      */
     public Shape getBasicObjectAt(Point point) {
-        Shape object = (Shape) this.box.getComponentAt(point.x, point.y);
-        if (object != null)
-            return object.getObjectAt(point);
+        Component component = this.getComponentAt(point.x, point.y);
+        if (component != null)
+            return ((Shape) component).getObjectAt(point);
         else
             return null;
     }
@@ -175,5 +181,10 @@ public class Canvas extends PaddingPanel {
             return null;
         else
             return component;
+    }
+
+    @Override
+    public void setComponentZOrder(Component component, int index){
+        this.box.setComponentZOrder(component, index);
     }
 }

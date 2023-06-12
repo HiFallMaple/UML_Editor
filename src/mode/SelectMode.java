@@ -37,7 +37,6 @@ public class SelectMode extends Mode {
             Point rightDown = new Point(Math.max(pressPoint.x, releasePoint.x),
                     Math.max(pressPoint.y, releasePoint.y));
             canvas.selectRange(leftTop, rightDown);
-            canvas.refresh();
         }
     }
 

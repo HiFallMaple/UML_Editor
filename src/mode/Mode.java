@@ -55,21 +55,17 @@ public abstract class Mode{
 
     public void mouseClicked(MouseEvent e) {
         clickPoint = new Point(e.getX(), e.getY());
-        canvas.refresh();
     }
 
     public void mousePressed(MouseEvent e) {
         pressPoint = new Point(e.getX(), e.getY());
-        canvas.refresh();
     }
 
     public void mouseReleased(MouseEvent e) {
         releasePoint = new Point(e.getX(), e.getY());
-        canvas.refresh();
     }
 
     public void mouseDragged(MouseEvent e) {
         isDragged = true;
-        canvas.refresh();
     }
 }

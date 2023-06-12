@@ -7,7 +7,7 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 
 public abstract class LineType {
-    Color color;
+    public Color color;
     
     protected void draw(Graphics g, Point head, Point tail){
         Graphics2D g2d = (Graphics2D) g;

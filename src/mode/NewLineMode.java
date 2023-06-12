@@ -27,10 +27,9 @@ public abstract class NewLineMode extends Mode {
             Line line = newLine();
             Point[] points = line.bindLineToObject(objects, pressPoint, releasePoint);
             line.setSizeLocation(points[0], points[1]);
-            canvas.addObject(line);
+            canvas.addLine(line);
         }
     }
-
 
     protected abstract Line newLine();
 }
