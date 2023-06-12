@@ -1,4 +1,5 @@
 package editor;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -14,7 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import main.Config;
-import main.Mode;
+import mode.Mode;
 
 public class ControlPanel extends PaddingPanel {
     private JButton[] buttons;
@@ -46,9 +47,9 @@ public class ControlPanel extends PaddingPanel {
             button.setIcon(icon);
             this.box.add(button);
             buttons[i] = button;
-            if(Mode.getStatus() == i){
+            if (Mode.getStatus() == i) {
                 button.setBackground(this.buttonSelectedBg);
-            }else{
+            } else {
                 button.setBackground(this.buttonBg);
             }
             button.setPreferredSize(new Dimension(buttonSize, buttonSize));
@@ -81,18 +82,22 @@ public class ControlPanel extends PaddingPanel {
     }
 
     private class ModeButtonListener implements ActionListener {
-        private int buttonIndex;
+        private Mode mode;
+        private CanvasMouseListener canvasML;
 
         public ModeButtonListener(int i) {
-            buttonIndex = i;
+            mode = Mode.getModeInstances(i);
+            canvasML = CanvasMouseListener.getInstance();
         }
 
         public void actionPerformed(ActionEvent e) {
-            buttons[Mode.getStatus()].setBackground(buttonBg);
-            buttons[buttonIndex].setBackground(buttonSelectedBg);
-            Mode.setStatus(buttonIndex);
+            for (int i = 0; i < Mode.modeStr.length; i++) {
+                buttons[i].setBackground(buttonBg);
+                JButton button = (JButton) e.getSource();
+                button.setBackground(buttonSelectedBg);
+                canvasML.setMode(mode);
+            }
         }
-
     }
 
     public class RoundedCornerButton extends JButton {

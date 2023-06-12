@@ -8,15 +8,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import main.BroadcastManager;
-
 public class MenuBar extends JMenuBar {
-    public MenuBar(){
-        // JMenu fileMenu = new JMenu("File");
-        // JMenuItem item = new JMenuItem("Open");
-        // fileMenu.add(item);
-        // this.add(fileMenu);
-    
+    private Canvas canvas;
+
+    public MenuBar(){    
+        this.canvas = Canvas.getInstance();
+
         JMenu editMenu = new JMenu("Edit");
         this.add(editMenu);
     
@@ -24,7 +21,7 @@ public class MenuBar extends JMenuBar {
         item.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                BroadcastManager.fire("group", "");
+                canvas.groupObject();
             }
         });
         editMenu.add(item);
@@ -33,7 +30,7 @@ public class MenuBar extends JMenuBar {
         item.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                BroadcastManager.fire("ungroup", "");
+                canvas.ungroupObject();
             }
         });
         editMenu.add(item);
@@ -42,7 +39,7 @@ public class MenuBar extends JMenuBar {
         item.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                BroadcastManager.fire("change object name", "");
+                canvas.changeObjectName();
                 
             }
         });

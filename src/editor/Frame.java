@@ -7,22 +7,31 @@ import main.Config;
 import java.awt.BorderLayout;
 
 public class Frame extends JFrame {
-    public Frame(String title) {
+    private static Frame instance;
+    private static String title = "UML Editor";
+
+    private Frame() {
         super(title);
         // Create a new JMenuBar
         MenuBar menuBar = new MenuBar();
         this.setJMenuBar(menuBar);
 
         JPanel root = new JPanel();
-        EditorPanel editorPanel = new EditorPanel(Config.getIntProperty("area.padding"));
+        Canvas canvas = Canvas.getInstance();
+        canvas.setFrame(this);
         JPanel controlArea = new ControlPanel(Config.getIntProperty("area.padding"));
-        CanvasEventController canvasEventController = new CanvasEventController(editorPanel, this);
-
+        
         this.setContentPane(root);
         root.setLayout(new BorderLayout());
-        root.add(editorPanel, BorderLayout.CENTER);
+        root.add(canvas, BorderLayout.CENTER);
         root.add(controlArea, BorderLayout.WEST);
+    }
 
+    public static synchronized Frame getInstance() {
+        if (instance == null) {
+            instance = new Frame();
+        }
+        return instance;
     }
 
 }

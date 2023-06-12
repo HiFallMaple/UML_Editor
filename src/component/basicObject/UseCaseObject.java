@@ -1,23 +1,23 @@
-package component;
+package component.basicObject;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
-import javax.swing.JPanel;
 
 import main.Config;
 
-public class UseCaseComponent extends BaseObject {
+public class UseCaseObject extends BasicObject {
 
     private Ellipse2D oval;
 
-    public UseCaseComponent(String name, JPanel canvas) {
-        super(canvas, name);
+    public UseCaseObject(String name) {
+        super(name);
         init();
     }
 
-    public UseCaseComponent(JPanel canvas) {
-        super(canvas, Config.getProperty("bo.UCC.name"));
+    public UseCaseObject() {
+        super(Config.getProperty("bo.UCC.name"));
         init();
     }
 
@@ -42,15 +42,16 @@ public class UseCaseComponent extends BaseObject {
         super.paintComponent(g);
         setSize(this.width, this.height);
         Graphics2D g2d = (Graphics2D) g;
-        int ovalwidth = width - connectionPortSize*2;
-        int ovalheight = height - connectionPortSize*2;
+        int ovalwidth = width - portSize*2;
+        int ovalheight = height - portSize*2;
         // 抗鋸齒
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(backgroundColor);
         // 畫橢圓
-        oval.setFrame(connectionPortSize, connectionPortSize, ovalwidth, ovalheight);
+        oval.setFrame(portSize, portSize, ovalwidth, ovalheight);
         g2d.fill(oval);
         g2d.setColor(borderColor);
-        g2d.drawOval(connectionPortSize, connectionPortSize, ovalwidth - 1, ovalheight-1);
+        g2d.drawOval(portSize, portSize, ovalwidth - 1, ovalheight-1);
         // 取得字串的長度
         int textWidth = g2d.getFontMetrics().stringWidth(this.getName());
         int textHeight = g2d.getFontMetrics().getHeight();
