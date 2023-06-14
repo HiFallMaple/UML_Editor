@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 
 import component.Shape;
 import component.line.Line;
+import main.Config;
 import main.Direction;
 import mode.Mode;
 
@@ -12,6 +13,7 @@ public abstract class NewLineMode extends Mode {
     private Line line = null;
     private Shape pressObject = null;
     private int pressPort;
+    private boolean stickToPort = Config.getBoolProperty("mode.line.stickToPort");
 
     public NewLineMode() {
         super();
@@ -31,11 +33,15 @@ public abstract class NewLineMode extends Mode {
             }
         } else {
             Point point = new Point(e.getX(), e.getY());
-            Shape object = canvas.getBasicObjectAt(point);
-            if (object != null && object!=pressObject) {
-                int port = object.getPortDirection(point);
-                line.setHeadPoint(object.getPortLocation(port));
-            } else {
+            if (stickToPort) {
+                Shape object = canvas.getBasicObjectAt(point);
+                if (object != null && object != pressObject) {
+                    int port = object.getPortDirection(point);
+                    line.setHeadPoint(object.getPortLocation(port));
+                } else {
+                    line.setHeadPoint(point);
+                }
+            }else{
                 line.setHeadPoint(point);
             }
         }

@@ -44,4 +44,8 @@ public class Config {
     public static int getHexIntProperty(String key) {
         return Integer.parseInt(properties.getProperty(key), 16);
     }
+
+    public static boolean getBoolProperty(String key){
+        return Boolean.parseBoolean(properties.getProperty(key));
+    }
 }

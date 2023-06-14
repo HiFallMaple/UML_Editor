@@ -6,11 +6,18 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import editor.Canvas;
+import main.Config;
 
 public class SelectArea extends Shape {
     private static SelectArea instance;
     private Rectangle selectArea;
     private Canvas canvas;
+    private int[] argb = {
+        Config.getIntProperty("sa.color.r"),
+        Config.getIntProperty("sa.color.g"),
+        Config.getIntProperty("sa.color.b"),
+        Config.getIntProperty("sa.color.alpha"),
+    };
 
     private SelectArea() {
         selectArea = new Rectangle(0, 0, 0, 0);
@@ -44,10 +51,9 @@ public class SelectArea extends Shape {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (!selectArea.isEmpty()) {
-            int alpha = 85; // 33% transparent
-            g.setColor(new Color(37, 148, 216, alpha));
+            g.setColor(new Color(argb[0], argb[1], argb[2], argb[3]));
             g.fillRect(selectArea.x, selectArea.y, selectArea.width, selectArea.height);
-            g.setColor(new Color(37, 148, 216));
+            g.setColor(new Color(argb[0], argb[1], argb[2]));
             g.drawRect(selectArea.x, selectArea.y, selectArea.width, selectArea.height);
 
         }

@@ -51,7 +51,7 @@ public class Line extends Shape {
     private void init(LineType type, Color color, int lineWidth) {
         this.connectShape = new ArrayList<Shape>();
         this.type = type;
-        this.padding = Config.getIntProperty("cl.boxpadding");
+        this.padding = Config.getIntProperty("line.boxpadding");
         this.lineWidth = lineWidth;
         this.color = color;
         this.setOpaque(false);
