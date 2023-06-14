@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 
@@ -85,6 +86,7 @@ public class BasicObject extends Shape {
 
     @Override
     public int getPortDirection(Point point) {
+        point = canvas.convertPointToComponent(this, point);
         Point port = new Point((-1 * ((float) height / width) * point.x + height - point.y) > 0 ? 1 : 0 // 1:左上 0:右下
                 , ((float) height / width * point.x - point.y) > 0 ? 1 : 0);// 1:右上 0:左下
 
@@ -110,6 +112,20 @@ public class BasicObject extends Shape {
     }
 
     @Override
+    public void removeLine(Line line){
+        for (ArrayList<LinePairs> pairsList : linePairsList) {
+            Iterator<LinePairs> iterator = pairsList.iterator();
+            while (iterator.hasNext()) {
+                LinePairs linePairs = iterator.next();
+                if (linePairs.line == line) {
+                    iterator.remove();
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
     public Point getPortLocation(int direction) {
         Point portLocation = null;
         if (direction == Direction.UP) {// up
@@ -124,6 +140,18 @@ public class BasicObject extends Shape {
         return canvas.convertPointToCanvas(this, portLocation);
     }
 
+    @Override
+    public void addToCanvas(){
+        super.addToCanvas();
+        canvas.addToShapeList(this);
+    }
+
+    @Override
+    public void removeFromCanvas(){
+        super.removeFromCanvas();
+        canvas.removeFromShapeList(this);
+    }
+
     /**
      * 更新與此物件相連的所有 Line 的位置
      */
@@ -131,7 +159,7 @@ public class BasicObject extends Shape {
         for (int i = 0; i < 4; i++) {
             for (LinePairs pair : linePairsList.get(i)) {
                 Point point = getPortLocation(i);
-                if (pair.lineDirection == Direction.HEAD) {
+                if (pair.lineDirection == Direction.TAIL) {
                     pair.line.setTailPoint(point);
                 } else {
                     pair.line.setHeadPoint(point);

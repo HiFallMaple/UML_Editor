@@ -57,12 +57,24 @@ public class CompositeObject extends Shape {
     }
 
     @Override
+    public void addToCanvas(){
+        super.addToCanvas();
+        canvas.addToShapeList(this);
+    }
+
+    @Override
+    public void removeFromCanvas(){
+        super.removeFromCanvas();
+        canvas.removeFromShapeList(this);
+    }
+
+    @Override
     public void ungroup() {
         for (Shape shape : this.shapeList) {
             Point l = shape.getLocation();
             shape.setLocation(l.x + getX(), l.y + getY());
             shape.unselect();
-            canvas.addObject(shape);
+            shape.addToCanvas();
         }
         moveLineToTop();
     }

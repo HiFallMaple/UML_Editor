@@ -11,12 +11,13 @@ public abstract class NewObjectMode extends Mode {
         super();
     }
 
+
     @Override
     public void mouseClicked(MouseEvent e) {
         super.mouseClicked(e);
         Shape object = newObject();
         object.setLocation(clickPoint);
-        canvas.addObject(object);
+        object.addToCanvas();;
     }
 
     protected abstract Shape newObject();

@@ -60,6 +60,12 @@ public abstract class Shape extends JPanel {
     public void moveLineToTop() {
     }
 
+    /**
+     * <p>
+     * Composite object 的特異化
+     * </p>
+     * 解除此 Object 的 group狀態
+     */
     public void ungroup() {
     }
 
@@ -80,7 +86,7 @@ public abstract class Shape extends JPanel {
      * <p>
      * Basic object 的特異化
      * </p>
-     * 給定與此物件的相對座標，回傳應該連接到哪個方位的連接點
+     * 給定在 canvas 中的相對座標，回傳應該連接到哪個方位的連接點
      * 
      * @param point
      */
@@ -99,5 +105,30 @@ public abstract class Shape extends JPanel {
      * @param lineDirection line 接入此物件是 head 還是 tail
      */
     public void addLine(Line line, int direction, boolean lineDirection) {
+    }
+
+     /**
+     * <p>
+     * Basic object 的特異化
+     * </p>
+     * 將 line 的從自身的引用中刪除
+     * 
+     * @param line
+     */
+    public void removeLine(Line line){
+    }
+
+    /**
+     * 將自身加入 canvas
+     */
+    public void addToCanvas(){
+        canvas.add(this);
+    }
+
+    /**
+     * 將自身從 canvas 刪除
+     */
+    public void removeFromCanvas(){
+        canvas.remove(this);
     }
 }

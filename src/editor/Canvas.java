@@ -12,12 +12,14 @@ import javax.swing.SwingUtilities;
 
 import component.Shape;
 import component.basicObject.CompositeObject;
+import component.line.Line;
 import main.Config;
 
 public class Canvas extends PaddingPanel {
     private static Canvas instance;
     private static int padding = Config.getIntProperty("area.padding");
     private Frame frame;
+    /** 每次 canvas 遍歷時使用的 list */
     protected ArrayList<Shape> shapeList;
 
     private Canvas() {
@@ -48,15 +50,37 @@ public class Canvas extends PaddingPanel {
         this.box.repaint();
     }
 
-    public void addObject(Shape object) {
+    @Override
+    public Component add(Component object) {
         this.box.add(object, 0);
-        this.shapeList.add(object);
+        refresh();
+        return null;
+    }
+
+    @Override
+    public void remove(Component object) {
+        this.box.remove(object);
         refresh();
     }
 
-    public void addLine(Shape object) {
-        this.box.add(object, 0);
-        refresh();
+    /**
+     * 將物件註冊到 shapeList 中
+     * @param object
+     */
+    public void addToShapeList(Shape object){
+        this.shapeList.add(object);
+    }
+
+    /**
+     * 將物件從 shapeList 中刪除
+     * @param object
+     */
+    public void removeFromShapeList(Shape object){
+        this.shapeList.remove(object);
+    }
+
+    public void removeLine(Line line){
+        this.box.remove(line);
     }
 
     public void removeObject(Shape object) {
@@ -100,7 +124,7 @@ public class Canvas extends PaddingPanel {
                 this.removeObject(object);
             }
             Shape group = new CompositeObject(list);
-            this.addObject(group);
+            group.addToCanvas();
             group.moveLineToTop();
         }
     }
