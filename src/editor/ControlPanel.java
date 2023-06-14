@@ -15,52 +15,46 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import main.Config;
-import mode.Mode;
+import mode.ModeManager;
 
 public class ControlPanel extends PaddingPanel {
-    private JButton[] buttons;
-    private Color buttonBg; // background color of button
-    private Color buttonSelectedBg; // background color of selected button
-    private int buttonSize;
-    private int buttonIconSize;
+    private ModeButton[] buttons;
 
     public ControlPanel(int padding) {
         super(padding, padding, padding, 0);
         addBox(new JPanel());
-        this.buttonBg = new Color(Config.getHexIntProperty("cp.bt.bgColor"));
-        this.buttonSelectedBg = new Color(Config.getHexIntProperty("cp.bt.selected.bgColor"));
-        this.buttonSize = Config.getHexIntProperty("cp.bt.size");
-        this.buttonIconSize = Config.getHexIntProperty("cp.bt.icon.size");
-        this.box.setLayout(new BoxLayout(this.box, BoxLayout.Y_AXIS));
-        addButton();
 
+        this.box.setLayout(new BoxLayout(this.box, BoxLayout.Y_AXIS));
+
+        addButton();
+        buttons[0].doClick();
     }
 
     private void addButton() {
-        buttons = new JButton[Mode.modeStr.length];
-        for (int i = 0; i < Mode.modeStr.length; i++) {
-            JButton button = new RoundedCornerButton();
-            // button.addActionListener((ActionListener) new ButtonListener(i));
-            button.addActionListener(new ModeButtonListener(i));
-            ImageIcon icon = getIcon(Mode.modeStr[i]);
-            button.setFocusPainted(false);
-            button.setIcon(icon);
-            this.box.add(button);
-            buttons[i] = button;
-            if (Mode.getStatus() == i) {
-                button.setBackground(this.buttonSelectedBg);
-            } else {
-                button.setBackground(this.buttonBg);
+        buttons = new ModeButton[ModeManager.getModeLength()];
+        ActionListener listener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int currentMode = ModeManager.getMode();
+                buttons[currentMode].unselect();
+                ModeButton button = (ModeButton) e.getSource();
+                button.select();
+                button.setMode();
             }
-            button.setPreferredSize(new Dimension(buttonSize, buttonSize));
-            button.setMinimumSize(new Dimension(buttonSize, buttonSize));
-            button.setMaximumSize(new Dimension(buttonSize, buttonSize));
+        };
+
+        for (int i = 0; i < ModeManager.getModeLength(); i++) {
+            ImageIcon icon = getIcon(ModeManager.getModeName(i));
+            ModeButton button = new ModeButton(i, icon, listener);
+            buttons[i] = button;
+            this.box.add(button);
             this.box.add(Box.createVerticalStrut(10)); // 添加間格
         }
     }
 
     private ImageIcon getIcon(String filename) {
         ImageIcon icon = new ImageIcon("src/res/" + filename + ".png");
+        int buttonIconSize = Config.getHexIntProperty("cp.bt.icon.size");
 
         // 取得原始圖片寬度和高度
         int originalWidth = icon.getIconWidth();
@@ -81,31 +75,41 @@ public class ControlPanel extends PaddingPanel {
         return icon;
     }
 
-    private class ModeButtonListener implements ActionListener {
-        private Mode mode;
-        private CanvasMouseListener canvasML;
+    public class ModeButton extends JButton {
+        private int mode;
+        private Color bgColor; // background color of button
+        private Color selectedBgColor; // background color of selected button
+        private int size;
 
-        public ModeButtonListener(int i) {
-            mode = Mode.getModeInstances(i);
-            canvasML = CanvasMouseListener.getInstance();
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            for (int i = 0; i < Mode.modeStr.length; i++) {
-                buttons[i].setBackground(buttonBg);
-                JButton button = (JButton) e.getSource();
-                button.setBackground(buttonSelectedBg);
-                canvasML.setMode(mode);
-            }
-        }
-    }
-
-    public class RoundedCornerButton extends JButton {
-
-        public RoundedCornerButton() {
+        public ModeButton(int i, ImageIcon icon, ActionListener listener) {
             super();
+
+            this.bgColor = new Color(Config.getHexIntProperty("cp.bt.bgColor"));
+            this.selectedBgColor = new Color(Config.getHexIntProperty("cp.bt.selected.bgColor"));
+            this.size = Config.getHexIntProperty("cp.bt.size");
+
             setOpaque(false);
+            addActionListener(listener);
             setFocusPainted(false);
+            setIcon(icon);
+            setBackground(this.bgColor);
+            setPreferredSize(new Dimension(size, size));
+            setMinimumSize(new Dimension(size, size));
+            setMaximumSize(new Dimension(size, size));
+
+            this.mode = i;
+        }
+
+        public void select(){
+            setBackground(this.selectedBgColor);
+        }
+
+        public void unselect(){
+            setBackground(this.bgColor);
+        }
+
+        public void setMode() {
+            ModeManager.setMode(this.mode);
         }
 
         @Override
