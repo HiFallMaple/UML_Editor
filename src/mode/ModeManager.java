@@ -1,6 +1,6 @@
 package mode;
 
-import editor.CanvasMouseListener;
+import editor.canvasArea.CanvasMouseListener;
 import mode.lineMode.AssociationLineMode;
 import mode.lineMode.CompositionLineMode;
 import mode.lineMode.GeneralizationLineMode;

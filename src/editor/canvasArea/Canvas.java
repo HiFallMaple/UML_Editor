@@ -1,4 +1,4 @@
-package editor;
+package editor.canvasArea;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -14,6 +14,7 @@ import component.CompositeObject;
 import component.SelectArea;
 import component.Shape;
 import component.line.Line;
+import editor.PaddingPanel;
 import main.Config;
 
 public class Canvas extends PaddingPanel {

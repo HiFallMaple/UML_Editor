@@ -5,7 +5,7 @@ import java.awt.Point;
 import javax.swing.JPanel;
 
 import component.line.Line;
-import editor.Canvas;
+import editor.canvasArea.Canvas;
 import main.Direction;
 
 public abstract class Shape extends JPanel {

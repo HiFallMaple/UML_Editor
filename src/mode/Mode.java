@@ -3,7 +3,7 @@ package mode;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-import editor.Canvas;
+import editor.canvasArea.Canvas;
 
 public abstract class Mode{
     protected Canvas canvas;

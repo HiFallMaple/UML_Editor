@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import editor.Canvas;
+import editor.canvasArea.Canvas;
 import main.Config;
 
 public class SelectArea extends Shape {
