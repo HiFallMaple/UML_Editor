@@ -22,6 +22,7 @@ public class Frame extends JFrame {
         JPanel controlArea = new ControlPanel(Config.getIntProperty("area.padding"));
         
         this.setContentPane(root);
+        
         root.setLayout(new BorderLayout());
         root.add(canvas, BorderLayout.CENTER);
         root.add(controlArea, BorderLayout.WEST);

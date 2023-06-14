@@ -1,5 +1,6 @@
 package editor;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
@@ -10,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import component.SelectArea;
 import component.Shape;
 import component.basicObject.CompositeObject;
 import component.line.Line;
@@ -65,21 +67,23 @@ public class Canvas extends PaddingPanel {
 
     /**
      * 將物件註冊到 shapeList 中
+     * 
      * @param object
      */
-    public void addToShapeList(Shape object){
+    public void addToShapeList(Shape object) {
         this.shapeList.add(object);
     }
 
     /**
      * 將物件從 shapeList 中刪除
+     * 
      * @param object
      */
-    public void removeFromShapeList(Shape object){
+    public void removeFromShapeList(Shape object) {
         this.shapeList.remove(object);
     }
 
-    public void removeLine(Line line){
+    public void removeLine(Line line) {
         this.box.remove(line);
     }
 
@@ -184,6 +188,16 @@ public class Canvas extends PaddingPanel {
         }
     }
 
+    public void setSelectArea(Point initialPoint, Point currentPoint) {
+        SelectArea.getInstance().renewBound(initialPoint, currentPoint);
+        refresh();
+    }
+
+    public void cleanSelectArea() {
+        SelectArea.getInstance().renewBound(new Point(0, 0), new Point(0, 0));
+        refresh();
+    }
+
     /**
      * 取得 point 座標的 Basic Object 物件
      * 
@@ -208,7 +222,7 @@ public class Canvas extends PaddingPanel {
     }
 
     @Override
-    public void setComponentZOrder(Component component, int index){
+    public void setComponentZOrder(Component component, int index) {
         this.box.setComponentZOrder(component, index);
     }
 }

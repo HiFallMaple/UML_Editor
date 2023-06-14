@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
+import component.SelectArea;
 import component.Shape;
 
 public class SelectMode extends Mode {
@@ -22,6 +23,8 @@ public class SelectMode extends Mode {
             pressComponent = (Shape) component;
             Point location = pressComponent.getLocation();
             originOffset = new Point(location.x - pressPoint.x, location.y - pressPoint.y);
+        }else{
+            canvas.add(SelectArea.getInstance());
         }
     }
 
@@ -38,6 +41,8 @@ public class SelectMode extends Mode {
                     Math.max(pressPoint.y, releasePoint.y));
             canvas.selectRange(leftTop, rightDown);
         }
+        canvas.cleanSelectArea();
+        canvas.remove(SelectArea.getInstance());
     }
 
     @Override
@@ -45,6 +50,8 @@ public class SelectMode extends Mode {
         super.mouseDragged(e);
         if (pressComponent != null) {
             pressComponent.setLocation(e.getX() + originOffset.x, e.getY() + originOffset.y);
+        } else {
+            canvas.setSelectArea(pressPoint, e.getPoint());
         }
     }
 

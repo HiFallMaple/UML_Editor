@@ -107,7 +107,7 @@ public abstract class Shape extends JPanel {
     public void addLine(Line line, int direction, boolean lineDirection) {
     }
 
-     /**
+    /**
      * <p>
      * Basic object 的特異化
      * </p>
@@ -115,20 +115,29 @@ public abstract class Shape extends JPanel {
      * 
      * @param line
      */
-    public void removeLine(Line line){
+    public void removeLine(Line line) {
     }
 
     /**
      * 將自身加入 canvas
      */
-    public void addToCanvas(){
+    public void addToCanvas() {
         canvas.add(this);
     }
 
     /**
      * 將自身從 canvas 刪除
      */
-    public void removeFromCanvas(){
+    public void removeFromCanvas() {
         canvas.remove(this);
+    }
+
+    /**
+     * <p>
+     * Select object 的特異化
+     * </p>
+     * 透過給定現在座標，更新 SelectObject 的大小與位置
+     */
+    public void renewBound(Point initialPoint, Point currentPoint){
     }
 }

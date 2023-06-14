@@ -21,15 +21,15 @@ public abstract class Mode{
     }
 
     public void mouseClicked(MouseEvent e) {
-        clickPoint = new Point(e.getX(), e.getY());
+        clickPoint = e.getPoint();
     }
 
     public void mousePressed(MouseEvent e) {
-        pressPoint = new Point(e.getX(), e.getY());
+        pressPoint = e.getPoint();
     }
 
     public void mouseReleased(MouseEvent e) {
-        releasePoint = new Point(e.getX(), e.getY());
+        releasePoint = e.getPoint();
     }
 
     public void mouseDragged(MouseEvent e) {
