@@ -12,6 +12,8 @@ import java.util.Iterator;
 import javax.swing.BorderFactory;
 
 import component.line.Line;
+import editor.ChangeNameDialog;
+import editor.Frame;
 import component.Shape;
 import main.Config;
 import main.Direction;
@@ -81,6 +83,16 @@ public class BasicObject extends Shape {
             // right
             g2d.fillRect(this.width - portSize, this.height / 2 - portSize / 2, portSize,
                     portSize);
+        }
+    }
+
+    @Override
+    public void changeName(){
+        ChangeNameDialog dialog = new ChangeNameDialog(Frame.getInstance());
+        dialog.setVisible(true);
+        if (dialog.isOk()) {
+            String text = dialog.getText();
+            this.setName(text);
         }
     }
 

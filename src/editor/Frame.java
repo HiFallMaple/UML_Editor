@@ -18,7 +18,6 @@ public class Frame extends JFrame {
 
         JPanel root = new JPanel();
         Canvas canvas = Canvas.getInstance();
-        canvas.setFrame(this);
         JPanel controlArea = new ControlPanel(Config.getIntProperty("area.padding"));
         
         this.setContentPane(root);

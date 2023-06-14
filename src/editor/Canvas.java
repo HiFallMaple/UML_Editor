@@ -11,16 +11,15 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import component.CompositeObject;
 import component.SelectArea;
 import component.Shape;
-import component.basicObject.CompositeObject;
 import component.line.Line;
 import main.Config;
 
 public class Canvas extends PaddingPanel {
     private static Canvas instance;
     private static int padding = Config.getIntProperty("area.padding");
-    private Frame frame;
     /** 每次 canvas 遍歷時使用的 list */
     protected ArrayList<Shape> shapeList;
 
@@ -41,10 +40,6 @@ public class Canvas extends PaddingPanel {
             instance = new Canvas();
         }
         return instance;
-    }
-
-    public void setFrame(Frame frame) {
-        this.frame = frame;
     }
 
     public void refresh() {
@@ -179,12 +174,7 @@ public class Canvas extends PaddingPanel {
             }
         }
         if (count == 1) { // 如果select等於一個，才進行ungroup
-            ChangeNameDialog dialog = new ChangeNameDialog(frame);
-            dialog.setVisible(true);
-            if (dialog.isOk()) {
-                String text = dialog.getText();
-                object.setName(text);
-            }
+           object.changeName();
         }
     }
 

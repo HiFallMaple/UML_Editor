@@ -140,4 +140,10 @@ public abstract class Shape extends JPanel {
      */
     public void renewBound(Point initialPoint, Point currentPoint){
     }
+
+    /**
+     * 跳出彈窗更改名字
+     */
+    public void changeName(){
+    }
 }

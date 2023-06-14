@@ -1,11 +1,9 @@
-package component.basicObject;
+package component;
 
 import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
-
-import component.Shape;
 
 public class CompositeObject extends Shape {
     protected ArrayList<Shape> shapeList;
