@@ -40,6 +40,7 @@ public class ControlPanel extends PaddingPanel {
                 ModeButton button = (ModeButton) e.getSource();
                 button.select();
                 button.setMode();
+                Canvas.getInstance().unselectAll();
             }
         };
 
