@@ -1,8 +1,9 @@
-package mode;
+package mode.objectMode;
 
 import java.awt.event.MouseEvent;
 
 import component.Shape;
+import mode.Mode;
 
 
 public abstract class NewObjectMode extends Mode {

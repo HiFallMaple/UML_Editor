@@ -1,6 +1,11 @@
 package mode;
 
 import editor.CanvasMouseListener;
+import mode.lineMode.AssociationLineMode;
+import mode.lineMode.CompositionLineMode;
+import mode.lineMode.GeneralizationLineMode;
+import mode.objectMode.ClassMode;
+import mode.objectMode.UseCaseMode;
 
 public class ModeManager {
     public final static int SELECT = 0;

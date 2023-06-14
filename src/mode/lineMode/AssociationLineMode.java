@@ -1,4 +1,4 @@
-package mode;
+package mode.lineMode;
 
 import component.line.AssociationLineType;
 import component.line.Line;

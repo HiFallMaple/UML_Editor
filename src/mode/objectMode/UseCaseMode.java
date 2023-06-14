@@ -1,4 +1,4 @@
-package mode;
+package mode.objectMode;
 
 import component.Shape;
 import component.basicObject.UseCaseObject;

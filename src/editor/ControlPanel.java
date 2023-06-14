@@ -8,11 +8,14 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.plaf.basic.BasicButtonUI;
 
 import main.Config;
 import mode.ModeManager;
@@ -80,6 +83,7 @@ public class ControlPanel extends PaddingPanel {
         private int mode;
         private Color bgColor; // background color of button
         private Color selectedBgColor; // background color of selected button
+        private Color pressedBgColor;
         private int size;
 
         public ModeButton(int i, ImageIcon icon, ActionListener listener) {
@@ -87,7 +91,15 @@ public class ControlPanel extends PaddingPanel {
 
             this.bgColor = new Color(Config.getHexIntProperty("cp.bt.bgColor"));
             this.selectedBgColor = new Color(Config.getHexIntProperty("cp.bt.selected.bgColor"));
+            this.pressedBgColor = new Color(Config.getHexIntProperty("cp.bt.pressed.bgColor"));
             this.size = Config.getHexIntProperty("cp.bt.size");
+            this.setUI(new BasicButtonUI() {// 設定自訂的 ButtonUI
+                @Override
+                protected void paintButtonPressed(Graphics g, AbstractButton b) {
+                    g.setColor(pressedBgColor);// 設定按下時的顏色
+                    g.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+                }
+            }); 
 
             setOpaque(false);
             addActionListener(listener);
@@ -101,11 +113,11 @@ public class ControlPanel extends PaddingPanel {
             this.mode = i;
         }
 
-        public void select(){
+        public void select() {
             setBackground(this.selectedBgColor);
         }
 
-        public void unselect(){
+        public void unselect() {
             setBackground(this.bgColor);
         }
 

@@ -1,4 +1,4 @@
-package mode;
+package mode.lineMode;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import component.Shape;
 import component.line.Line;
 import main.Direction;
+import mode.Mode;
 
 public abstract class NewLineMode extends Mode {
     private Line line = null;

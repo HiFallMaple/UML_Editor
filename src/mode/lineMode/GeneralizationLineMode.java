@@ -1,4 +1,4 @@
-package mode;
+package mode.lineMode;
 
 import component.line.GeneralizationLineType;
 import component.line.Line;
