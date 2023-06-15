@@ -80,11 +80,13 @@ public class Canvas extends PaddingPanel {
 
     public void removeLine(Line line) {
         this.box.remove(line);
+        refresh();
     }
 
     public void removeObject(Shape object) {
         this.box.remove(object);
         this.shapeList.remove(object);
+        refresh();
     }
 
     /**
@@ -139,7 +141,6 @@ public class Canvas extends PaddingPanel {
         }
         if (count == 1) { // 如果select等於一個，才進行ungroup
             object.ungroup();
-            this.removeObject(object);
         }
     }
 

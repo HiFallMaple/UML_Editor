@@ -75,6 +75,7 @@ public class CompositeObject extends Shape {
             shape.addToCanvas();
         }
         moveLineToTop();
+        canvas.removeObject(this);
     }
 
     @Override
