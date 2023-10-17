@@ -71,7 +71,7 @@ public class ModePanel extends PaddingPanel {
     }
 
     private ImageIcon getIcon(String filename) {
-        ImageIcon icon = new ImageIcon("src/res/" + filename + ".png");
+        ImageIcon icon = new ImageIcon("res/" + filename + ".png");
         int buttonIconSize = Config.getHexIntProperty("mode.bt.icon.size");
 
         // 取得原始圖片寬度和高度

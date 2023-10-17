@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class Config {
     
-    private static final String FILE_NAME = "src/main/config.properties";
+    private static final String FILE_NAME = "config/config.properties";
     
     private static Properties properties;
     
